@@ -27,3 +27,21 @@ module "ecs_cluster_ec2" {
   http_port               = module.vpc_resources.http_port
   vpc_id                  = module.vpc_resources.vpc_id
 }
+
+module "secrets_manager" {
+  source            = "./secrets_manager"
+  database_username = var.database_username
+  database_name     = var.database_name
+  database_password = var.database_password
+}
+
+module "rds" {
+  source                  = "./rds"
+  project_name            = var.project_name
+  rds_sg_id               = module.vpc_resources.rds_sg_id
+  private_subnet_a_rds_id = module.vpc_resources.private_subnet_a_rds_id
+  private_subnet_b_rds_id = module.vpc_resources.private_subnet_b_rds_id
+  database_name           = var.database_name
+  database_username       = var.database_username
+  database_password       = var.database_password
+}
