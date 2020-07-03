@@ -1,6 +1,7 @@
 terraform {
   required_providers {
-    aws = "~> 2.68"
+    aws  = "~> 2.68"
+    null = "~> 2.1"
   }
 }
 
@@ -44,4 +45,9 @@ module "rds" {
   database_name           = var.database_name
   database_username       = var.database_username
   database_password       = var.database_password
+}
+
+module "ecr" {
+  source       = "./ecr"
+  project_name = var.project_name
 }
