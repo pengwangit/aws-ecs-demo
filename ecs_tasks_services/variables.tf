@@ -35,3 +35,4 @@ variable "db_secrets_kms_key_arn" {}
 variable "ecs_target_group_arn" {}
 variable "ecs_cluster_id" {}
 variable "ecs_cluster_name" {}
+variable "aws_autoscaling_group_arn" {}

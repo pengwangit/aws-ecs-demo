@@ -66,3 +66,20 @@ resource "aws_autoscaling_group" "asg" {
     create_before_destroy = true
   }
 }
+
+resource "aws_autoscaling_group" "asg_service" {
+  name = format("%s-asg-service", var.project_name)
+
+  launch_configuration = aws_launch_configuration.ecs_launch_configuration.name
+  vpc_zone_identifier  = [var.private_subnet_a_ecs_id, var.private_subnet_b_ecs_id]
+  max_size             = var.asg_max_size
+  min_size             = var.asg_min_size
+  desired_capacity     = var.asg_desired_size
+
+  health_check_grace_period = var.health_check_grace_period
+  health_check_type         = "ELB"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
