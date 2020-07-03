@@ -23,8 +23,6 @@ variable "target_value" {
   default     = 1
 }
 
-
-
 variable "project_name" {}
 variable "region" {}
 variable "nginx_repository_url" {}
