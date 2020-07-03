@@ -6,9 +6,9 @@ terraform {
 }
 
 provider "aws" {
-  region                  = var.region
-  shared_credentials_file = "./demo_creds/creds"
-  profile                 = "./demo_creds/config"
+  region = var.region
+  # shared_credentials_file = "./demo_creds/creds"
+  # profile                 = "./demo_creds/config"
 }
 
 module "vpc_resources" {
@@ -50,4 +50,20 @@ module "rds" {
 module "ecr" {
   source       = "./ecr"
   project_name = var.project_name
+}
+
+module "ecs_tasks_services" {
+  source                 = "./ecs_tasks_services"
+  project_name           = var.project_name
+  region                 = var.region
+  nginx_repository_url   = module.ecr.nginx_repository_url
+  app_repository_url     = module.ecr.app_repository_url
+  nginx_version_tag      = module.ecr.nginx_version_tag
+  app_version_tag        = module.ecr.app_version_tag
+  db_host                = module.rds.address
+  db_secret_arn          = module.secrets_manager.db_secrets_arn
+  db_secrets_kms_key_arn = module.secrets_manager.db_secrets_kms_key_arn
+  ecs_target_group_arn   = module.ecs_cluster_ec2.ecs_target_group_arn
+  ecs_cluster_id         = module.ecs_cluster_ec2.ecs_cluster_id
+  ecs_cluster_name       = module.ecs_cluster_ec2.ecs_cluster_name
 }

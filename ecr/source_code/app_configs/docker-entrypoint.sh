@@ -8,6 +8,7 @@ update_conf_file () {
 	sed -i 's/^"DbPassword".*/"DbPassword" = '\"${DB_PASSWORD}\"'/' ./conf.toml
 	sed -i 's/^"DbName".*/"DbName" = '\"${DB_NAME}\"'/' ./conf.toml
 	sed -i 's/^"DbHost".*/"DbHost" = '\"${DB_HOST}\"'/' ./conf.toml
+	sed -i 's/^"ListenHost".*/"ListenHost" = "0.0.0.0"/' ./conf.toml
 }
 
 update_conf_file
