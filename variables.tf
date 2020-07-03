@@ -20,3 +20,17 @@ variable "database_password" {
   type        = string
   description = "database_password"
 }
+
+# extract variable for fast demo set up
+
+variable "nginx_version_tag" {}
+
+variable "app_version_tag" {}
+
+variable "app_git_url" {}
+
+variable "multi_az" {}
+
+variable "backup_retention_period" {}
+
+variable "target_value" {}

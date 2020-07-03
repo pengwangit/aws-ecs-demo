@@ -6,9 +6,9 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
-  # shared_credentials_file = "./demo_creds/creds"
-  # profile                 = "./demo_creds/config"
+  region                  = var.region
+  shared_credentials_file = "./demo_creds/creds"
+  profile                 = "./demo_creds/config"
 }
 
 module "vpc_resources" {
@@ -45,11 +45,15 @@ module "rds" {
   database_name           = var.database_name
   database_username       = var.database_username
   database_password       = var.database_password
+  multi_az                = var.multi_az
+  backup_retention_period = var.backup_retention_period
 }
 
 module "ecr" {
-  source       = "./ecr"
-  project_name = var.project_name
+  source            = "./ecr"
+  project_name      = var.project_name
+  nginx_version_tag = var.nginx_version_tag
+  app_git_url       = var.app_git_url
 }
 
 module "ecs_tasks_services" {
@@ -58,8 +62,8 @@ module "ecs_tasks_services" {
   region                    = var.region
   nginx_repository_url      = module.ecr.nginx_repository_url
   app_repository_url        = module.ecr.app_repository_url
-  nginx_version_tag         = module.ecr.nginx_version_tag
-  app_version_tag           = module.ecr.app_version_tag
+  nginx_version_tag         = var.nginx_version_tag
+  app_version_tag           = var.app_version_tag
   db_host                   = module.rds.address
   db_secret_arn             = module.secrets_manager.db_secrets_arn
   db_secrets_kms_key_arn    = module.secrets_manager.db_secrets_kms_key_arn
@@ -67,4 +71,5 @@ module "ecs_tasks_services" {
   ecs_cluster_id            = module.ecs_cluster_ec2.ecs_cluster_id
   ecs_cluster_name          = module.ecs_cluster_ec2.ecs_cluster_name
   aws_autoscaling_group_arn = module.ecs_cluster_ec2.aws_autoscaling_group_arn
+  target_value              = var.target_value
 }

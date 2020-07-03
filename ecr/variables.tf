@@ -21,7 +21,7 @@ variable "nginx_version_tag" {
 }
 
 variable "app_version_tag" {
-  default = 4
+  default = 1
 }
 
 variable "app_git_url" {

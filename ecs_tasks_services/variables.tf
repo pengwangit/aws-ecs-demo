@@ -19,8 +19,8 @@ variable "service_asg_min_size" {
 }
 
 variable "target_value" {
-  description = "The min size for the autoscaling group for the service."
-  default     = 1
+  description = "The MEM value to trigger autoscaling group for the service."
+  default     = 50
 }
 
 variable "project_name" {}

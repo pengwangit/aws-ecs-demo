@@ -23,10 +23,9 @@ variable "instance_class" {
   default     = "db.t2.micro"
 }
 
-# set to false to speed up demo provision
 variable "multi_az" {
   description = "multi_az"
-  default     = false
+  default     = true
 }
 
 variable "backup_retention_period" {
