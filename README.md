@@ -2,6 +2,8 @@
 
 This repository contains Terrorform configuration files to deploy a Golang application with NGINX Reverse Proxy Sidecar to a highly scalable and available AWS ECS cluster (EC2 instances) across aws multiple availability zones.
 
+![aws ecs demo architecture](./aws_ecs_demo.png)
+
 ## Key AWS components
 
 * [Amazon VPC](https://aws.amazon.com/vpc/)
@@ -62,7 +64,7 @@ database_password   = "demopd"
 
 However, for demo purpose, you may not need to change them.
 ```
-* Deploy all the infrastructures
+* Deploy all the infrastructures manually
 
 ```
 # git clone https://github.com/pengwangit/aws-ecs-demo.git
@@ -72,7 +74,7 @@ However, for demo purpose, you may not need to change them.
 # terraform plan -out demotfplan
 # terraform apply demotfplan
 # terraform output ecs_alb_dns_name
-# check the website via ecs_alb_dns_name, wait for 60 second if you see 503 error
+# check the website via ecs_alb_dns_name, wait for 60 seconds if you see 503 error
 ```
 * To destroy all the infrastructures after demo
 
@@ -81,6 +83,11 @@ However, for demo purpose, you may not need to change them.
 
 ```
 
+* Auto deployment and testing
+```
+# chmod +x auto_deploy.sh
+# ./auto_deploy.sh
+```
 ### Thanks to 
 
 * https://github.com/servian/TechTestApp
